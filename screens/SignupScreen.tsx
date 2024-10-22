@@ -1,41 +1,57 @@
-import { useCallback, useEffect, useState } from "react";
-import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { colors } from "../styles/global";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const LoginScreen = ({ navigation, route }) => {
+const SignupScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(true);
+  const [selectedInput, setSelelectedInput] = useState<'password' | 'confirm'>('password');
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
   };
 
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "Hello world!" })
+  }, []);
+
+  const handlePasswordChange = (
+    value: string,
+    isPassword: boolean,
+  ) => {
+    if (isPassword) {
+      setPassword(value);
+    } else {
+      setPasswordConfirm(value)
+    }
   };
 
-  const showPassword = () => {
-    setIsPasswordVisible(prev => !prev)
+  const showPassword = (isPassword: 'password' | 'confirm') => {
+    if (isPassword) {
+      setIsPasswordVisible(prev => !prev);
+    } else {
+      setIsConfirmVisible(prev => !prev)
+    }
   };
 
   const onLogin = () => {
-    // Alert.alert("Credentials", `${email} + ${password}`);
-    navigation.navigate('LoggedIn', { screen: 'Main' });
+    Alert.alert("Credentials", `${email} + ${password}`);
   };
 
   const onSignUp = () => {
-    navigation.navigate('Signup', { userEmail: email })
+    console.log('Sign up!');
   };
   
   const showButton = (
     <TouchableOpacity
-      onPress={showPassword}
+      onPress={() => showPassword(selectedInput)}
     >
       <Text style={[styles.baseText, styles.passwordButtonText]}>
         Показати
@@ -71,31 +87,44 @@ const LoginScreen = ({ navigation, route }) => {
                 onTextChange={handleEmailChange}
               />
 
-              <Input
-                value={password}
-                placeholder="Пароль"
-                rightButton={showButton}
-                outerStyles={styles.passwordButton}
-                onTextChange={handlePasswordChange}
-                secureTextEntry={isPasswordVisible}
-              />
+              <Pressable onPress={() => setSelelectedInput('password')}>
+                <Input
+                  value={password}
+                  placeholder="Пароль"
+                  rightButton={showButton}
+                  outerStyles={styles.passwordButton}
+                  onTextChange={(value) => handlePasswordChange(value, true)}
+                  secureTextEntry={isPasswordVisible}
+                />
+              </Pressable>
+
+              <Pressable onPress={() => setSelelectedInput('confirm')}>
+                <Input
+                  value={passwordConfirm}
+                  placeholder="Пароль ще раз"
+                  rightButton={showButton}
+                  outerStyles={styles.passwordButton}
+                  onTextChange={(value) => handlePasswordChange(value, false)}
+                  secureTextEntry={isConfirmVisible}
+                />
+              </Pressable>
             </View>
 
             <View style={[styles.innerContainer, styles.buttonContainer]}>
               <Button onPress={onLogin}>
                 <Text style={[styles.baseText, styles.loginButtonText]}>
-                  Увійти
+                  Реєстрація
                 </Text>
               </Button>
 
-              <View style={styles.signUpContainer}>
+              {/* <View style={styles.signUpContainer}>
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Немає акаунту?
                   <TouchableWithoutFeedback onPress={onSignUp}>
                     <Text style={styles.signUpText}> Зареєструватися</Text>
                   </TouchableWithoutFeedback>
                 </Text>
-              </View>
+              </View> */}
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -104,7 +133,7 @@ const LoginScreen = ({ navigation, route }) => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -130,7 +159,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: SCREEN_WIDTH,
-    height: "55%",
+    height: "70%",
     backgroundColor: colors.white,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,

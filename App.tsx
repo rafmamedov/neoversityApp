@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import 'react-native-gesture-handler';
 import { ActivityIndicator } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
-import LoginScreen from './screens/LoginScreen';
+import BottomTabNavigator from './navigation/BottomTabNavigator';
+import StackNavigator from './navigation/StackNavigator';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -13,10 +16,12 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <ActivityIndicator size="large" />; // Показуй індикатор завантаження
+    return <ActivityIndicator size="large" />;
   }
 
   return (
-    <LoginScreen />
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 }
