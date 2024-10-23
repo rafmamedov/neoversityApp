@@ -1,12 +1,16 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { FC, useEffect, useLayoutEffect, useState } from "react";
 import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { colors } from "../styles/global";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { StackParamList } from "../navigation/StackNavigator";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const SignupScreen = ({ navigation, route }) => {
+type HomeScreenProps = NativeStackScreenProps<StackParamList, 'Signup'>;
+
+const SignupScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');

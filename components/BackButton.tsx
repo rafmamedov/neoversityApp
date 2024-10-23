@@ -8,12 +8,12 @@ type Props = {
   onPress?: () => void;
 }
 
-const BackButton: FC<Props> = ({ onPress }) => {
+const BackButton: FC<Props> = ({ onPress = () => {} }) => {
   const navigation = useNavigation();
   const route = useRoute();
 
   return (
-    <TouchableOpacity onPress={handleGoBack}>
+    <TouchableOpacity onPress={onPress}>
       <ArrowLeftIcon />
     </TouchableOpacity>
   );

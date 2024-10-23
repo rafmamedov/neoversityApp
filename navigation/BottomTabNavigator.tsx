@@ -1,35 +1,36 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from '@expo/vector-icons/Ionicons'
 
-import LoginScreen from "../screens/LoginScreen";
-import LogoutIcon from "../icons/LogoutIcon";
-import LogoutButton from "../components/LogoutButton";
+import MapScreen from "../screens/MapScreen";
+import CameraScreen from "../screens/CameraScreen";
 import BackButton from "../components/BackButton";
-import SignupScreen from "../screens/SignupScreen";
-import MainScreen from "../screens/MainScreen";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Login"
-      screenOptions={{
+      initialRouteName="Map"
+      screenOptions={({ navigation }) => ({
         headerRightContainerStyle: { paddingRight: 16 },
         headerLeftContainerStyle: { paddingLeft: 16 },
         tabBarLabel: "",
-        // headerShown: false,
-      }}
+        headerLeft: () => (
+          <BackButton
+            onPress={() => navigation.goBack()}
+          />
+        ),
+      })}
     >
       <Tab.Screen
-        name="Main"
-        component={MainScreen}
+        name="Map"
+        component={MapScreen}
         options={({ navigation }) => ({
-          title: "Main",
+          title: "Map",
           tabBarIcon: ({ focused }) => (
             <Ionicons
               size={32}
-              name="heart-circle"
+              name="map"
               color={focused ? "red" : "black"}
             />
           ),
@@ -37,53 +38,21 @@ const BottomTabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Login"
-        component={LoginScreen}
+        name="Camera"
+        component={CameraScreen}
         options={({ navigation }) => ({
-          title: "Увійти",
-          headerLeft: () => <BackButton />,
+          title: "Camera",
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="log-in"
+              name="camera"
               size={32}
               color={focused ? "red" : "black"}
             />
           ),
-          tabBarHideOnKeyboard: true,
         })}
-      />
-
-      <Tab.Screen
-        name="Signup"
-        component={SignupScreen}
-        options={{
-          title: "Реєстрація",
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="add-circle"
-              size={32}
-              color={focused ? "red" : "black"}
-            />
-          ),
-        }}
       />
     </Tab.Navigator>
   );
 };
 
 export default BottomTabNavigator;
-
-
-
-
-
-
-
-
-// export type RootTabParamList = {
-//   Home: undefined;         // Якщо екран не приймає параметрів
-//   Settings: { userId: string }; // Якщо екран приймає параметри
-// };
-
-// Типізуємо параметри для HomeScreen
-// type HomeScreenProps = NativeStackScreenProps<RootTabParamList, 'Home'>;

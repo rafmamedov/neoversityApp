@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { colors } from "../styles/global";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { StackParamList } from "../navigation/StackNavigator";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
-const LoginScreen = ({ navigation, route }) => {
+// Типізуємо параметри для HomeScreen
+type HomeScreenProps = NativeStackScreenProps<StackParamList, 'Login'>;
+
+const LoginScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
@@ -26,7 +31,7 @@ const LoginScreen = ({ navigation, route }) => {
 
   const onLogin = () => {
     // Alert.alert("Credentials", `${email} + ${password}`);
-    navigation.navigate('LoggedIn', { screen: 'Main' });
+    navigation.navigate('Home');
   };
 
   const onSignUp = () => {

@@ -1,9 +1,17 @@
 import { createStackNavigator } from "@react-navigation/stack"
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 const Stack = createStackNavigator();
+
+export type StackParamList = {
+  Home: undefined;         // Якщо екран не приймає параметрів
+  Login: undefined;
+  Signup: { userEmail: string }; // Якщо екран приймає параметри
+};
 
 const StackNavigator = () => {
   return (
@@ -27,7 +35,7 @@ const StackNavigator = () => {
       />
 
       <Stack.Screen
-        name="LoggedIn"
+        name="Home"
         component={BottomTabNavigator}
         options={{
           title: "",
