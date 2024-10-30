@@ -1,10 +1,11 @@
-import { FC, useEffect, useLayoutEffect, useState } from "react";
+import { FC, useLayoutEffect, useState } from "react";
 import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { colors } from "../styles/global";
-import Input from "../components/Input";
-import Button from "../components/Button";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { StackParamList } from "../navigation/StackNavigator";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import { colors } from "../../styles/global";
+import { registerDB } from "../utils/auth";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -45,12 +46,9 @@ const SignupScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
     }
   };
 
-  const onLogin = () => {
-    Alert.alert("Credentials", `${email} + ${password}`);
-  };
-
   const onSignUp = () => {
     console.log('Sign up!');
+    registerDB({ email, password })
   };
   
   const showButton = (
@@ -69,7 +67,7 @@ const SignupScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
     >
       <>
         <Image
-          source={require("../assets/images/background.png")}
+          source={require("../../assets/images/background.png")}
           resizeMode="cover"
           style={styles.image}
         />
@@ -115,7 +113,7 @@ const SignupScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
             </View>
 
             <View style={[styles.innerContainer, styles.buttonContainer]}>
-              <Button onPress={onLogin}>
+              <Button onPress={onSignUp}>
                 <Text style={[styles.baseText, styles.loginButtonText]}>
                   Реєстрація
                 </Text>

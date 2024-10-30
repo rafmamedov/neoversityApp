@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { StyleSheet, TouchableOpacity, ViewStyle } from "react-native"
 
-import { colors } from "../styles/global";
+import { colors } from "../../styles/global";
 
 type ButtonProps = {
   children: React.ReactNode,

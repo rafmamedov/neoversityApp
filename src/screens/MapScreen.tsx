@@ -11,8 +11,6 @@ type Coords = {
 const MapScreen = () => {
   const [location, setLocation] = useState<Coords | null>(null);
 
-  console.log(location)
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();

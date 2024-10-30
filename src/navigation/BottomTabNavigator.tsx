@@ -4,10 +4,14 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import MapScreen from "../screens/MapScreen";
 import CameraScreen from "../screens/CameraScreen";
 import BackButton from "../components/BackButton";
+import { logoutDB } from "../utils/auth";
+import { useDispatch } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
+  const dispatch = useDispatch();
+
   return (
     <Tab.Navigator
       initialRouteName="Map"
@@ -17,7 +21,7 @@ const BottomTabNavigator = () => {
         tabBarLabel: "",
         headerLeft: () => (
           <BackButton
-            onPress={() => navigation.goBack()}
+            onPress={() => logoutDB(dispatch)}
           />
         ),
       })}

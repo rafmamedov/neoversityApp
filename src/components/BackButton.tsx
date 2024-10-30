@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { TouchableOpacity } from "react-native"
-
-import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 import { useNavigation, useRoute } from "@react-navigation/native";
+
+import ArrowLeftIcon from "../../icons/ArrowLeftIcon";
 
 type Props = {
   onPress?: () => void;

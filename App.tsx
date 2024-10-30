@@ -1,10 +1,14 @@
 import 'react-native-gesture-handler';
-import { ActivityIndicator } from 'react-native';
+import { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
+import { ActivityIndicator, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import StackNavigator from './navigation/StackNavigator';
+import store from './src/redux/store/store';
+import StackNavigator from './src/navigation/StackNavigator';
+import { authStateChanged } from './src/utils/auth';
 
 
 export default function App() {
@@ -20,8 +24,27 @@ export default function App() {
   }
 
   return (
+    <Provider store={store.store}>
+      <PersistGate
+        loading={<Text>Loading...</Text>}
+        persistor={store.persistor}
+      >
+        <AuthListener />
+    </PersistGate>
+    </Provider>
+  );
+}
+
+const AuthListener = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    authStateChanged(dispatch);
+  }, [dispatch]);
+
+  return (
     <NavigationContainer>
       <StackNavigator />
     </NavigationContainer>
   );
-}
+};

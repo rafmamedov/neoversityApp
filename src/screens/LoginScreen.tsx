@@ -1,11 +1,13 @@
-import { FC, useCallback, useEffect, useState } from "react";
-import { Alert, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
-import { colors } from "../styles/global";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { FC, useState } from "react";
+import {Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { StackParamList } from "../navigation/StackNavigator";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import { colors } from "../../styles/global";
+import { loginDB } from "../utils/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store/store";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -16,6 +18,9 @@ const LoginScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  // const userInfo = useSelector((state: RootState) => state.user.userInfo);
+  const dispatch = useDispatch();
+  // console.log('userInfo', userInfo)
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -29,13 +34,18 @@ const LoginScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
     setIsPasswordVisible(prev => !prev)
   };
 
-  const onLogin = () => {
-    // Alert.alert("Credentials", `${email} + ${password}`);
-    navigation.navigate('Home');
+  const onLogin = async () => {
+    console.log('onLogin')
+    try {
+      await loginDB({ email, password }, dispatch)
+      // Логіка для переходу на інший екран або відображення повідомлення про успіх
+    } catch (err) {
+      console.error('Login error:', err); // Логування помилок
+    }
   };
 
   const onSignUp = () => {
-    navigation.navigate('Signup', { userEmail: email })
+    navigation.navigate('Signup')
   };
   
   const showButton = (
@@ -54,7 +64,7 @@ const LoginScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
     >
       <>
         <Image
-          source={require("../assets/images/background.png")}
+          source={require("../../assets/images/background.png")}
           resizeMode="cover"
           style={styles.image}
         />
