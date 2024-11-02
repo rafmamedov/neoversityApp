@@ -28,9 +28,9 @@
         ],
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location when open.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app requires access to your location even when closed.",
-        "NSLocationAlwaysUsageDescription":  "This app requires access to your location when open.",
-        "NSCameraUsageDescription":  "This app requires access to your camera when open.",
-        "NSMediaLibraryUsageDescription":  "This app requires access to your camera when open.",
+        "NSLocationAlwaysUsageDescription": "This app requires access to your location when open.",
+        "NSCameraUsageDescription": "This app requires access to your camera when open.",
+        "NSMediaLibraryUsageDescription": "This app requires access to your camera when open.",
         "deploymentTarget": "14"
       }
     },
@@ -43,7 +43,15 @@
         "googleMaps": {
           "apiKey": "AIzaSyCw5RG5hV0guHJOEenpb6afKt2MGSZB_Tw"
         }
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ],
+      "package": "com.neoversityapp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -66,6 +74,11 @@
           "isAccessMediaLocationEnabled": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3633a9f7-547d-4717-b56b-03897826ff90"
+      }
+    }
   }
 }

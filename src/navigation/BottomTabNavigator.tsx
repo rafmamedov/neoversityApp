@@ -1,11 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useDispatch } from "react-redux";
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 import MapScreen from "../screens/MapScreen";
 import CameraScreen from "../screens/CameraScreen";
 import BackButton from "../components/BackButton";
+import ProfileScreen from "../screens/ProfileScreen";
 import { logoutDB } from "../utils/auth";
-import { useDispatch } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +50,21 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="camera"
+              size={32}
+              color={focused ? "red" : "black"}
+            />
+          ),
+        })}
+      />
+
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({ navigation }) => ({
+          title: "Profile",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="person"
               size={32}
               color={focused ? "red" : "black"}
             />

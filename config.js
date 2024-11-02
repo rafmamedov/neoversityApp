@@ -9,14 +9,10 @@ import { getStorage } from "firebase/storage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
-  apiKey: '', // з GoogleCloud API
-  authDomain: 'neoversityapp.firebaseapp.com',
-  databaseURL: '<https://neoversityapp.firebaseio.com>',
-  projectId: 'neoversityapp',
-  storageBucket: 'neoversityapp.appspot.com',
-  appId: '1:860888754710:ios:311d9684baea8a17e56337',
-  messagingSenderId: '860888754710',
-  // measurementId: 'G-measurement-id',
+  apiKey: 'AIzaSyBBSHYG5EgvhXGEhNnoBlSADgavRv6AYIA',
+  authDomain: 'neoversityapp-35dcc.firebaseapp.com',
+  projectId: 'neoversityapp-35dcc',
+  storageBucket: 'gs://neoversityapp-35dcc.firebasestorage.app',
 };
 
 const app = initializeApp(firebaseConfig);

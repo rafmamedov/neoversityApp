@@ -18,9 +18,7 @@ const LoginScreen: FC<HomeScreenProps> = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
-  // const userInfo = useSelector((state: RootState) => state.user.userInfo);
   const dispatch = useDispatch();
-  // console.log('userInfo', userInfo)
 
   const handleEmailChange = (value: string) => {
     setEmail(value);

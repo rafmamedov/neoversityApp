@@ -9,7 +9,7 @@ import {
 import { auth } from '../../config';
 import { setUserInfo, clearUserInfo } from '../redux/reducers/userSlice';
 import { AppDispatch } from '../redux/store/store';
-import { addUser, updateUserInFirestore } from './firestore';
+import { addUser, getUser, updateUserInFirestore } from './firestore';
 
 // Типи для реєстрації та авторизації
 interface AuthCredentials {
@@ -23,7 +23,7 @@ export const registerDB = async ({ email, password }: AuthCredentials) => {
     const credentials = await createUserWithEmailAndPassword(auth, email, password);
     const user = credentials.user;
 
-    await addUser(user.uid, { email: user.email || '', uid: user.uid })
+    await addUser(user.uid, { uid: user.uid, email: user.email || '', displayName: user.displayName || ''})
   } catch (error) {
     console.log('SIGNUP ERROR:', error)
   };
@@ -59,13 +59,14 @@ export const logoutDB = async (dispatch: AppDispatch) => {
 
 // Відстеження змін у стані аутентифікації
 export const authStateChanged = (dispatch: AppDispatch) => {
-  onAuthStateChanged(auth, (user) => {
-    console.log('Auth state changed:', user);
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
+      const userData = await getUser(user.uid)
+
       dispatch(setUserInfo({
+        ...userData,
         uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
+        email: user.email || '',
       }));
     } else {
       dispatch(clearUserInfo());
@@ -74,13 +75,13 @@ export const authStateChanged = (dispatch: AppDispatch) => {
 };
 
 // Оновлення профілю користувача
-export const updateUserProfile = async (update: { displayName?: string; photoURL?: string }) => {
-  const user = auth.currentUser;
-  if (user) {
-    try {
-      await updateProfile(user, update);
-    } catch (error) {
-      throw error;
-    }
-  }
-};
+// export const updateUserProfile = async (update: { displayName?: string; photoURL?: string }) => {
+//   const user = auth.currentUser;
+//   if (user) {
+//     try {
+//       await updateProfile(user, update);
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// };

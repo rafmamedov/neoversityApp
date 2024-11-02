@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserData } from '../../types';
 
 // Типи для початкового стану
 interface UserState {
-  userInfo: { uid: string; email: string | null; displayName: string | null } | null;
+  userInfo: UserData | null;
 }
 
 const initialState: UserState = {
