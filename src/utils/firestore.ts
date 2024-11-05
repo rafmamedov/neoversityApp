@@ -13,6 +13,15 @@ export const addUser = async (userId: string, userData: UserData) => {
   }
 };
 
+export const addPost = async (userId: string, post: any) => {
+  try {
+    await setDoc(doc(db, 'posts', userId), { userId, posts: [post]}, { merge: true });
+    console.log('Post added:', userId);
+  } catch (error) {
+    console.error('Error adding post:', error);
+  }
+};
+
 // Функція для отримання документа з колекції
 export const getUser = async (userId: string) => {
   const docRef = doc(db, 'users', userId);
@@ -38,7 +47,11 @@ export const updateUserInFirestore = async (uid: string, data: any) => {
 };
 
 // Функція для завантаження зображення
-export const uploadImage = async (userId: string, file: Blob, fileName: string) => {
+export const uploadImage = async (
+  userId: string,
+  file: Blob,
+  fileName: string,
+) => {
   try {
     const imageRef = ref(storage, `profilePhotos/${userId}/${fileName}`);
 

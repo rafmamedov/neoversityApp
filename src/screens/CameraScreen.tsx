@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FC } from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { CreatePostStackParamList } from "../navigation/CreatePostNavigator";
 
-export default function CameraScreen() {
+type ScreenProps = NativeStackScreenProps<CreatePostStackParamList, 'Camera'>;
+
+const CameraScreen: FC<ScreenProps> = ({ navigation }) => {
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [permissionResponse, requestLibraryPermission] = MediaLibrary.usePermissions();
@@ -29,20 +33,20 @@ export default function CameraScreen() {
   };
 
   const takePhoto = async () => {
-    // if (!camera) return;
+    if (!camera) return;
 
-    // const image = await camera?.current?.takePictureAsync();
-    // await MediaLibrary.saveToLibraryAsync(image.uri);
-    // console.log('image', image)
+    const image = await camera?.current?.takePictureAsync();
+    await MediaLibrary.saveToLibraryAsync(image.uri);
+    navigation.replace('CreatePost', { photo: image.uri })
   }
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView ref={camera} style={styles.camera} facing={facing}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+          {/* <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={styles.button} onPress={takePhoto}>
             <Text style={styles.text}>Take Photo</Text>
@@ -52,6 +56,8 @@ export default function CameraScreen() {
     </View>
   );
 }
+
+export default CameraScreen;
 
 const styles = StyleSheet.create({
   container: {

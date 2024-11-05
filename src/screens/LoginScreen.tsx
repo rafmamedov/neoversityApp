@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import {Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
-import { StackParamList } from "../navigation/StackNavigator";
+import { StackParamList } from "../navigation/CreatePostNavigator";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { colors } from "../../styles/global";

@@ -33,6 +33,14 @@
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
+    <key>NSCameraUsageDescription</key>
+    <string>The app would like to use your camera to take photo while verifying profile</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Program requires GPS to track cars and job orders</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Access is required to upload media files from application</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access is required to add media files to the application</string>
     <key>GMSApiKey</key>
     <string>AIzaSyCw5RG5hV0guHJOEenpb6afKt2MGSZB_Tw</string>
     <key>LSRequiresIPhoneOS</key>

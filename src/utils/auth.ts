@@ -37,8 +37,9 @@ export const loginDB = async ({ email, password }: AuthCredentials, dispatch: Ap
 
     dispatch(setUserInfo({
       uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      email: user?.email || '',
+      displayName: user?.displayName || '',
+      profilePhoto: user?.photoURL || "",
     }));
     return user;
   } catch (error) {
